@@ -93,7 +93,7 @@ module Release
     # Raise an error if not found.
     def extract_version
       buildfile = File.read(Rake.application.rakefile.to_s)
-      puts buildfile.scan(THIS_VERSION_PATTERN) 
+      puts "!!!!!!!!!!!!!!!!!!!" + buildfile.scan(THIS_VERSION_PATTERN) 
       buildfile.scan(THIS_VERSION_PATTERN)[0][2]
     rescue
       fail 'Looking for THIS_VERSION = "1.0.0-rc1" in your Buildfile, none found'
