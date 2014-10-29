@@ -201,7 +201,7 @@ module Release
       msg
     end
 
-    def update_version_to_nextu
+    def update_version_to_next
       update_buildfile
     end
   end
