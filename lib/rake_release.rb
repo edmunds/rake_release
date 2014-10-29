@@ -278,7 +278,10 @@ module Release
       fail 'perforce release missing required P4PASSWORD environment' unless password
       fail 'perforce release missing required P4CLIENT environment' unless client
 
-      cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} #{args.map { |arg| arg.inspect }.join(' ')}"
+      # ISSUE: needs to be hardcoded to change -o to work.
+      # cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} #{args.map { |arg| arg.inspect }.join(' ')}"
+      cmd = "/usr/local/bin/p4 -p #{port} -u #{user} -P #{password} -c #{client} change -o"
+      $stderr.puts cmd
       output = `#{cmd}`
       fail "P4 command \"#{cmd}\" failed with status #{$?.exitstatus}\n#{output}" unless $?.exitstatus == 0
       return output
