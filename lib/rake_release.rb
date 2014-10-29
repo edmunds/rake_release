@@ -278,15 +278,7 @@ module Release
       fail 'perforce release missing required P4PASSWORD environment' unless password
       fail 'perforce release missing required P4CLIENT environment' unless client
 
-<<<<<<< Local Changes
-      cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} change -o"
-      print cmd
-=======
       cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} #{args.map { |arg| arg.inspect }.join(' ')}"
-<<<<<<< Local Changes
->>>>>>> External Changes
-=======
->>>>>>> External Changes
       output = `#{cmd}`
       fail "P4 command \"#{cmd}\" failed with status #{$?.exitstatus}\n#{output}" unless $?.exitstatus == 0
       return output
