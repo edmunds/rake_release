@@ -92,8 +92,7 @@ module Release
     # Extract the current version number from the buildfile.
     # Raise an error if not found.
     def extract_version
-      buildfile = File.read(Rake.application.rakefile.to_s)
-      puts "!!!!!!!!!!!!!!!!!!!" + buildfile.scan(THIS_VERSION_PATTERN) 
+      buildfile = File.read(Rake.application.rakefile).force_encoding("ISO-8859-1").encode("utf-8", replace: nil)
       buildfile.scan(THIS_VERSION_PATTERN)[0][2]
     rescue
       fail 'Looking for THIS_VERSION = "1.0.0-rc1" in your Buildfile, none found'
@@ -155,7 +154,7 @@ module Release
     def change_version
       current_version = extract_version
       new_version = yield(current_version)
-      buildfile = File.read(Rake.application.rakefile.to_s)
+      buildfile = File.read(Rake.application.rakefile).force_encoding("ISO-8859-1").encode("utf-8", replace: nil)
       buildfile.gsub(THIS_VERSION_PATTERN) { |ver| ver.sub(/(["']).*\1/, %Q{"#{new_version}"}) }
     end
 
@@ -202,7 +201,7 @@ module Release
       msg
     end
 
-    def update_version_to_next
+    def update_version_to_nextu
       update_buildfile
     end
   end
@@ -279,7 +278,15 @@ module Release
       fail 'perforce release missing required P4PASSWORD environment' unless password
       fail 'perforce release missing required P4CLIENT environment' unless client
 
+<<<<<<< Local Changes
+      cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} change -o"
+      print cmd
+=======
       cmd = "p4 -p #{port} -u #{user} -P #{password} -c #{client} #{args.map { |arg| arg.inspect }.join(' ')}"
+<<<<<<< Local Changes
+>>>>>>> External Changes
+=======
+>>>>>>> External Changes
       output = `#{cmd}`
       fail "P4 command \"#{cmd}\" failed with status #{$?.exitstatus}\n#{output}" unless $?.exitstatus == 0
       return output
